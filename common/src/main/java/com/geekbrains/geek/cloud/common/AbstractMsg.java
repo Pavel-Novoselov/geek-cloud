@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 public abstract class AbstractMsg implements Serializable {
     String type;
+
     public abstract String toString();
-    public String getType(){
+
+    public String getType() {
         return this.type;
     }
 
