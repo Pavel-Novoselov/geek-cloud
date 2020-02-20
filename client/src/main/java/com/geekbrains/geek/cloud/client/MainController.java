@@ -6,8 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +25,12 @@ public class MainController implements Initializable {
     @FXML
     ListView<String> filesList;
 
+    @FXML
+    ListView<String> filesServer;
+
+    @FXML
+    Label lb1, lb2;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Network.start();
@@ -36,11 +44,10 @@ public class MainController implements Initializable {
                         refreshLocalFilesList();
                     } else if (abstractMessage instanceof CommandMsg) {
                         CommandMsg commandMsg = (CommandMsg) abstractMessage;
-                        String text = "Respronse from Server: " + commandMsg.getCommand();
+                        String [] listFromServer = commandMsg.getCommand().split(" ");
                         Platform.runLater(() -> {
-                            filesList.getItems().add(text);
+                            filesServer.getItems().addAll(listFromServer);
                         });
-
                     }
                 }
             } catch (ClassNotFoundException | IOException e) {
@@ -68,17 +75,19 @@ public class MainController implements Initializable {
         if (tfFileName.getLength() > 0) {
             Network.sendMsg(new CommandMsg("download", tfFileName.getText()));
             tfFileName.clear();
+            refreshLocalFilesList();
         }
     }
 
     public void pressOnCommandBtn(ActionEvent actionEvent) {
+        filesServer.getItems().clear();
         Network.sendMsg(new CommandMsg("list", tfFileName.getText()));
-        tfFileName.clear();
     }
 
     public void pressOnExitBtn(ActionEvent actionEvent) {
         Network.sendMsg(new CommandMsg("exit", tfFileName.getText()));
         Network.stop();
+        Platform.exit();
     }
 
     public void refreshLocalFilesList() {
@@ -97,6 +106,27 @@ public class MainController implements Initializable {
             r.run();
         } else {
             Platform.runLater(r);
+        }
+    }
+
+    public void selectFile (MouseEvent mouseEvent){
+        if(mouseEvent.getClickCount()==2){
+            Platform.runLater(() -> {
+               String str = filesList.getSelectionModel().getSelectedItems().toString();
+               str=str.substring(1, str.length()-1);
+               tfFileName.setText (str);
+            });
+        }
+    }
+
+    public void selectFileServer (MouseEvent mouseEvent){
+        if(mouseEvent.getClickCount()==2){
+            Platform.runLater(() -> {
+                String str = filesServer.getSelectionModel().getSelectedItems().toString();
+                str=str.substring(1, str.length()-1);
+                tfFileName.setText (str);
+            });
+            //           MiniStage ms = new MiniStage(clientsList.getSelectionModel().getSelectedItems(), out, textArea);
         }
     }
 }

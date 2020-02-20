@@ -56,8 +56,8 @@ public class MainHandler extends ChannelInboundHandlerAdapter {
     private void listFiles(ChannelHandlerContext ctx) throws IOException {
         List<Path> response = Files.list(Paths.get("server/server_storage/")).collect(Collectors.toList());
         StringBuilder sb = new StringBuilder();
-        Files.list(Paths.get("server/server_storage/")).map(p -> p.getFileName().toString()).map(p -> p + ", ").collect(Collectors.toList()).forEach(sb::append);
-        ctx.writeAndFlush(new CommandMsg("List of files: " + sb.toString(), null));
+        Files.list(Paths.get("server/server_storage/")).map(p -> p.getFileName().toString()).map(p -> p + " ").collect(Collectors.toList()).forEach(sb::append);
+        ctx.writeAndFlush(new CommandMsg(sb.toString(), null));
     }
 
 }
