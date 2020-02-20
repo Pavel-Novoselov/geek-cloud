@@ -49,7 +49,6 @@ public class Network {
         }
         return false;
     }
-
     public static AbstractMsg readObject() throws ClassNotFoundException, IOException {
         Object obj = in.readObject();
         return (AbstractMsg) obj;

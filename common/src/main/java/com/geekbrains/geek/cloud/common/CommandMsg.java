@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class CommandMsg extends AbstractMsg implements Serializable {
 
     private String command;
-
     private String fileName;
 
     public CommandMsg(String command, String fileName) {

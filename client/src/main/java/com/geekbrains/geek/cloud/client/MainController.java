@@ -34,10 +34,10 @@ public class MainController implements Initializable {
                         FileMsg fileMsg = (FileMsg) abstractMessage;
                         Files.write(Paths.get("client/client_storage/" + fileMsg.getFilename()), fileMsg.getBytes(), StandardOpenOption.CREATE);
                         refreshLocalFilesList();
-                    } else if (abstractMessage instanceof CommandMsg){
+                    } else if (abstractMessage instanceof CommandMsg) {
                         CommandMsg commandMsg = (CommandMsg) abstractMessage;
-                        String text = "Respronse from Server: "+commandMsg.getCommand();
-                        Platform.runLater(()->{
+                        String text = "Respronse from Server: " + commandMsg.getCommand();
+                        Platform.runLater(() -> {
                             filesList.getItems().add(text);
                         });
 
@@ -70,9 +70,10 @@ public class MainController implements Initializable {
             tfFileName.clear();
         }
     }
+
     public void pressOnCommandBtn(ActionEvent actionEvent) {
-            Network.sendMsg(new CommandMsg("list", tfFileName.getText()));
-            tfFileName.clear();
+        Network.sendMsg(new CommandMsg("list", tfFileName.getText()));
+        tfFileName.clear();
     }
 
     public void pressOnExitBtn(ActionEvent actionEvent) {

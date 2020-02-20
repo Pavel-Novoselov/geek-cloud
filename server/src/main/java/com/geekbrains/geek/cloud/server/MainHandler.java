@@ -21,7 +21,7 @@ public class MainHandler extends ChannelInboundHandlerAdapter {
         try {
             if (msg instanceof CommandMsg) {
                 CommandMsg commandMsg = (CommandMsg) msg;
-                switch (commandMsg.getCommand()){
+                switch (commandMsg.getCommand()) {
                     case "download":
                         sendFile(commandMsg.getFileName(), ctx);
                         break;
@@ -31,7 +31,7 @@ public class MainHandler extends ChannelInboundHandlerAdapter {
                     default:
                         break;
                 }
-            } else if (msg instanceof FileMsg){
+            } else if (msg instanceof FileMsg) {
                 FileMsg fileMsg = (FileMsg) msg;
                 Files.write(Paths.get("server/server_storage/" + fileMsg.getFilename()), fileMsg.getBytes(), StandardOpenOption.CREATE);
             }
@@ -46,18 +46,18 @@ public class MainHandler extends ChannelInboundHandlerAdapter {
         ctx.close();
     }
 
-    private void sendFile (String filename, ChannelHandlerContext ctx) throws IOException {
+    private void sendFile(String filename, ChannelHandlerContext ctx) throws IOException {
         if (Files.exists(Paths.get("server/server_storage/" + filename))) {
             FileMsg fileMsg = new FileMsg(Paths.get("server/server_storage/" + filename));
             ctx.writeAndFlush(fileMsg);
         }
     }
 
-    private void listFiles (ChannelHandlerContext ctx) throws IOException {
+    private void listFiles(ChannelHandlerContext ctx) throws IOException {
         List<Path> response = Files.list(Paths.get("server/server_storage/")).collect(Collectors.toList());
         StringBuilder sb = new StringBuilder();
-        Files.list(Paths.get("server/server_storage/")).map(p->p.getFileName().toString()).map(p->p+", ").collect(Collectors.toList()).forEach(sb::append);
-        ctx.writeAndFlush(new CommandMsg("List of files: "+sb.toString(),null));
+        Files.list(Paths.get("server/server_storage/")).map(p -> p.getFileName().toString()).map(p -> p + ", ").collect(Collectors.toList()).forEach(sb::append);
+        ctx.writeAndFlush(new CommandMsg("List of files: " + sb.toString(), null));
     }
 
 }

@@ -39,14 +39,14 @@ public class FileMsg extends AbstractMsg implements Serializable {
 
     public FileMsg(Path path) throws IOException {
 
-            super("file");
-            this.filename = path.getFileName().toString();
-            this.size = Files.size(path);
-            this.bytes = Files.readAllBytes(path);
+        super("file");
+        this.filename = path.getFileName().toString();
+        this.size = Files.size(path);
+        this.bytes = Files.readAllBytes(path);
     }
 
     @Override
     public String toString() {
-        return "File name: "+filename;
+        return "File name: " + filename;
     }
 }
