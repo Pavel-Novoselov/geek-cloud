@@ -14,10 +14,33 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Label?>
-<VBox fx:id="rootNode" alignment="CENTER" prefHeight="400.0" prefWidth="400.0"
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
+<VBox fx:id="rootNode" alignment="CENTER" prefHeight="500.0" prefWidth="700.0"
       style="-fx-background-color: linear-gradient(#fff 0%, #eee 10%, #ddd 90%, #bbb 100%);"
       xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
       fx:controller="com.geekbrains.geek.cloud.client.MainController">
+    <VBox fx:id="firstPanel">
+        <Label fx:id="lb3" text="Форма регистрации"/>
+        <Label fx:id="lb4" text="Ник-нейм"/>
+        <TextField VBox.vgrow="ALWAYS" promptText="Придумайте Ник" fx:id="nickFieldReg"/>
+        <Label fx:id="lb5" text="Логин"/>
+        <TextField VBox.vgrow="ALWAYS" promptText="Придумайте Логин" fx:id="loginFieldReg"/>
+        <Label fx:id="lb6" text="Пароль"/>
+        <PasswordField promptText="Придумайте пароль" fx:id="passwordFieldReg" onAction="#tryToReg"/>
+        <Button text="Зарегистрироваться" onAction="#tryToReg" alignment="CENTER"/>
+        <Button text="Я уже зарегистрирован" onAction="#goToAuth" alignment="CENTER"/>
+    </VBox>
+    <VBox fx:id="upperPanel" managed="false" visible="false">
+        <Label fx:id="textArea"/>
+        <Label fx:id="lb7" text="Форма авторизации"/>
+        <Label fx:id="lb8" text="Логин"/>
+        <TextField VBox.vgrow="ALWAYS" promptText="Логин..." fx:id="loginField"/>
+        <Label fx:id="lb9" text="Пароль"/>
+        <PasswordField promptText="Пароль..." fx:id="passwordField" onAction="#tryToAuth"/>
+        <Button text="Войти" onAction="#tryToAuth"/>
+    </VBox>
+    <VBox fx:id="bottomPanel" managed="false" visible="false">
     <HBox>
         <TextField fx:id="tfFileName" focusTraversable="false"
                    promptText="Выберите файл из списка внизу (двойной клик)" HBox.hgrow="ALWAYS"/>
@@ -26,6 +49,8 @@
     <HBox>
         <Button onAction="#pressOnUploadBtn" text="Upload"/>
         <Button onAction="#pressOnDownloadBtn" text="Download"/>
+        <Button onAction="#pressOnDeleteClientBtn" text="Delete here"/>
+        <Button onAction="#pressOnDeleteServerBtn" text="Delete on Server"/>
     </HBox>
     <HBox>
 
@@ -38,11 +63,12 @@
     <HBox>
     <VBox>
         <Label fx:id="lb1" text="Files on our computer"/>
-        <ListView fx:id="filesList" onMouseClicked="#selectFile" VBox.vgrow="ALWAYS" prefWidth="300"/>
+        <ListView fx:id="filesList" onMouseClicked="#selectFile" VBox.vgrow="ALWAYS" prefWidth="350"/>
     </VBox>
     <VBox>
         <Label fx:id="lb2" text="Files on Server"/>
-        <ListView fx:id="filesServer" onMouseClicked="#selectFileServer" VBox.vgrow="ALWAYS" prefWidth="300"/>
+        <ListView fx:id="filesServer" onMouseClicked="#selectFileServer" VBox.vgrow="ALWAYS" prefWidth="350"/>
     </VBox>
     </HBox>
+    </VBox>
 </VBox>

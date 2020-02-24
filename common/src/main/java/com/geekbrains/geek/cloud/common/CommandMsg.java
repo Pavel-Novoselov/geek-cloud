@@ -13,6 +13,11 @@ public class CommandMsg extends AbstractMsg implements Serializable {
         this.fileName = fileName;
     }
 
+    public CommandMsg(String command) {
+        super("command");
+        this.command = command;
+    }
+
     public String getFileName() {
         return fileName;
     }
