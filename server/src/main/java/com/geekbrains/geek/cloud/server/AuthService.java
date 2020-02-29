@@ -6,7 +6,6 @@ import java.util.Properties;
 public class AuthService {
     private static Connection connection;
     private static Statement stmt;
-
     public static void connect() {
         try {
             Class.forName("org.postgresql.Driver");
@@ -21,7 +20,6 @@ public class AuthService {
             e.printStackTrace();
         }
     }
-
     public static void disconnect() {
         try {
             connection.close();
@@ -29,7 +27,6 @@ public class AuthService {
             e.printStackTrace();
         }
     }
-
     public static String getNickByLoginAndPass(String login, String pass) throws SQLException {
         String sql = String.format("SELECT nickname FROM main where login = '%s' and password = '%s'",
                 login, pass.hashCode());
@@ -40,13 +37,10 @@ public class AuthService {
 
         return null;
     }
-
     //запись в базу данных строчки с новым пользователем
     public static void addNewUser(String nick, String login, String password) throws SQLException {
         String sql = String.format("INSERT INTO main (login, password, nickname) VALUES ('%s', '%s', '%s');",
                 login, password.hashCode(), nick);
         stmt.execute(sql);
     }
-
-
 }

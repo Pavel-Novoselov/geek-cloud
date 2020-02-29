@@ -104,7 +104,6 @@ public class MainHandler extends ChannelInboundHandlerAdapter {
         }
         return currentNick;
     }
-
     private void registration(String regFields, ChannelHandlerContext ctx) throws SQLException {
         String[] regTokens = regFields.split(" ");
         if (regTokens.length>0){
@@ -123,8 +122,5 @@ public class MainHandler extends ChannelInboundHandlerAdapter {
             ctx.writeAndFlush(new CommandMsg("Неверный nickname/логин/пароль", null));
             admin.warn("неудачная создать пользователя");
         }
-
     }
-
-
 }
