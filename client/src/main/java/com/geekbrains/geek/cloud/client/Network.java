@@ -3,11 +3,13 @@ package com.geekbrains.geek.cloud.client;
 import com.geekbrains.geek.cloud.common.AbstractMsg;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.Socket;
 
 public class Network {
+    private static final Logger admin = Logger.getLogger("admin");
     private static Socket socket;
     private static ObjectEncoderOutputStream out;
     private static ObjectDecoderInputStream in;
@@ -16,7 +18,7 @@ public class Network {
         try {
             socket = new Socket("localhost", 8189);
             out = new ObjectEncoderOutputStream(socket.getOutputStream());
-            in = new ObjectDecoderInputStream(socket.getInputStream(), 50 * 1024 * 1024);
+            in = new ObjectDecoderInputStream(socket.getInputStream(), 1024 * 1024 * 1024);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,4 +55,6 @@ public class Network {
         Object obj = in.readObject();
         return (AbstractMsg) obj;
     }
+
+
 }
